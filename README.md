@@ -3,6 +3,20 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Effects each of the P, I, D components had in your implementation.
+I have tried different PID coefficients and observed their influence how stable car behaves.
+P as its name implies (proportional) coeeficient was responsible for compensating current steering error.
+For example if P coefficient was high the car would swing from left to right, and that make sense because it tries to compensate the current steering error very hard (since Kp is high) and overshoots the target. So it was important to choose Kp not too high but also resonably low so that the control algorithm could respond to immediate changes in the error.
+
+I (integral) component was accumulating the error over time and it made a very big impact on the control since the cumulative error would get to high. So i have decided to choose Ki as 0 so that it would not have any effect on the controller.
+
+D (derivate) component really helped where P component would overshoot the target. Kd is resposible for the rate of change in the error and had knowledge about the error over time. So basically when i made Kd component higher the controller would make the steering more smooth and react to changes slowly and compensate them at the same time.
+
+## Describe how the final hyperparameters were chosen. (Manual tuning)
+At the beggining i started by using only P component and i saw that higher values would swing the car and lower values would not even make first turn. So i understood that -0.5 is to high bu -0.1 is too low. But to come up with final Kp value i had to try I and D components and see how they work altogether.
+Whatever the values i chose for I component it did not help and i decided to keep it 0 at this time.
+The D component was choosen to be -0.5 with same P value but it the car kept swinging left and right. That way i understood that P component is too high. So i have gradually lowered P component to -0.15 while increasing D component to -0.85 and got the car going the complete lap with the kP = -0.15, kI = 0, kD = -0.85. 
+
 ## Dependencies
 
 * cmake >= 3.5
